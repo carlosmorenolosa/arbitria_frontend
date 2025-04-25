@@ -193,10 +193,7 @@ export default function App() {
 
                 <div className="flex-1 overflow-auto p-4 bg-gray-100 flex items-center justify-center">
                   {selected?.pdf_url ? (
-                    <Document
-                      file={`${API_BASE}${selected.pdf_url}`}
-                      className="w-full h-full"
-                    >
+                    <Document file={selected.pdf_url} className="w-full h-full">
                       <Page pageNumber={pageNumber} width={600} />
                     </Document>
                   ) : (
