@@ -38,7 +38,7 @@ export default function App() {
     (async () => {
       try {
         /* 1. carga el PDF completo */
-        const pdf = await getDocument(`${API_BASE}${selected.pdf_url}`).promise;
+        const pdf = await getDocument(selected.pdf_url).promise;
 
         /* 2. normaliza el texto del fragmento (primeros 120 chars) */
         const needle = selected.texto
@@ -185,7 +185,7 @@ export default function App() {
                   <p className="whitespace-pre-wrap">{selected?.texto}</p>
                   <button
                     className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
-                    onClick={() => window.open(`${API_BASE}${selected?.pdf_url}`, "_blank")}
+                    onClick={() => window.open(selected?.pdf_url, "_blank")}
                   >
                     <ExternalLink className="w-4 h-4" /> Abrir PDF completo
                   </button>
