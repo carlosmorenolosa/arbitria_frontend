@@ -143,9 +143,9 @@ export default function App() {
       </header>
 
 
-      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden min-h-0">
         {/* Chat Area */}
-        <section className="w-full lg:w-2/3 flex flex-col">
+        <section className="w-full lg:w-2/3 flex flex-col flex-1 overflow-hidden min-h-0">
           <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {history.map((m, i) => (
               <motion.div
@@ -206,7 +206,7 @@ export default function App() {
         </section>
 
         {/* Fragments & PDF */}
-        <aside className="flex flex-col w-full lg:w-1/3 border-t lg:border-l border-gray-200 bg-white">
+        <aside className="flex flex-col w-full lg:w-1/3 flex-1 overflow-hidden min-h-0 border-t lg:border-l border-gray-200 bg-white">
           {fragments.length > 0 ? (
             <Tabs.Root defaultValue="0" className="flex flex-col h-full">
               <Tabs.List className="flex space-x-2 overflow-x-auto p-4">
