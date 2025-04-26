@@ -244,9 +244,9 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="flex-1 p-4 flex items-center justify-center overflow-auto">
+                <div className="flex-1 p-4 flex flex-col overflow-auto min-h-0">
                   {selected?.pdf_url ? (
-                    <div className="w-full flex-1 overflow-auto rounded-lg min-h-0">
+                   <div className="w-full flex-1 h-full overflow-auto rounded-lg">
                       <Document file={selected.pdf_url}>
                         <Page pageNumber={pageNumber} width={600} />
                       </Document>
