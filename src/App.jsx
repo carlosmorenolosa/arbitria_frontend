@@ -143,7 +143,7 @@ export default function App() {
       </header>
 
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
         {/* Chat Area */}
         <section className="w-full lg:w-2/3 flex flex-col">
           <div className="flex-1 overflow-y-auto p-6 space-y-3">
