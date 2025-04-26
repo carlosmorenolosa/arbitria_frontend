@@ -124,12 +124,24 @@ export default function App() {
     >
       {/* Header */}
       <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
-        <div className="max-w-4xl mx-auto py-4 px-4 flex items-center justify-between">
-          <h1 className="text-center text-2xl font-semibold text-gray-800 flex-1">
+        <div className="max-w-4xl mx-auto py-4 px-4 flex flex-col items-center">
+          <h1 className="text-2xl font-semibold text-gray-800">
             ⚖️ ArbitrIA, tu IA especializada en reglamento de fútbol
           </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Desarrollado por{" "}
+            <a
+              href="https://caeys.es"
+              className="text-indigo-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Caeys.es
+            </a>
+          </p>
         </div>
       </header>
+
 
       <div className="flex flex-1 overflow-hidden">
         {/* Chat Area */}
