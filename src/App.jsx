@@ -35,17 +35,28 @@ export default function App() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
 
-  // Buscar fragmento en PDF cuando cambia `selected`
+  // Buscar fragmento en PDF cuando cambia `selected`, usando chunking para mayor robustez
   useEffect(() => {
     if (!selected) return;
     (async () => {
       try {
         const pdf = await getDocument(selected.pdf_url).promise;
-        const needle = selected.texto
+
+        // 1) Normalizar y acortar texto a 120 chars
+        const clean = selected.texto
           .replace(/\s+/g, " ")
           .trim()
           .toLowerCase()
           .slice(0, 120);
+
+        // 2) Crear chunks de 40 chars solapados
+        const chunkSize = 40;
+        const chunks = [];
+        for (let start = 0; start < clean.length; start += chunkSize / 2) {
+          chunks.push(clean.substr(start, chunkSize));
+        }
+
+        // 3) Recorrer páginas y buscar alguno de los chunks
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
           const { items } = await page.getTextContent();
@@ -54,11 +65,15 @@ export default function App() {
             .join(" ")
             .replace(/\s+/g, " ")
             .toLowerCase();
-          if (haystack.includes(needle)) {
+
+          // Si algún chunk coincide, tenemos la página
+          if (chunks.some((c) => haystack.includes(c))) {
             setPageNumber(i);
             return;
           }
         }
+
+        // Fallback a página 1
         setPageNumber(1);
       } catch (err) {
         console.error("Búsqueda en PDF falló:", err);
