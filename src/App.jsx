@@ -111,9 +111,8 @@ export default function App() {
       <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
         <div className="max-w-4xl mx-auto py-4 px-4 flex items-center justify-between">
           <h1 className="text-center text-2xl font-semibold text-gray-800 flex-1">
-            ⚖️ Asist​ente de Reglamento Arbitral
+            ⚖️ ArbitrIA, tu IA especializada en reglamento de fútbol
           </h1>
-          {/* Si tienes un toggle o botón, colócalo aquí */}
         </div>
       </header>
 
@@ -184,14 +183,17 @@ export default function App() {
           {fragments.length > 0 ? (
             <Tabs.Root defaultValue="0" className="flex flex-col h-full">
               <Tabs.List className="flex space-x-2 overflow-x-auto p-4">
-                {fragments.map((_, idx) => (
+                {fragments.map((frag, idx) => (
                   <Tabs.Trigger
                     key={idx}
                     value={`${idx}`}
-                    onClick={() => setSelected(fragments[idx])}
+                    onClick={() => setSelected(frag)}
                     className="px-3 py-1 text-sm font-medium rounded-full hover:bg-gray-100 data-[state=active]:bg-indigo-100 data-[state=active]:text-indigo-600"
                   >
-                    Fragmento {idx + 1}
+                    Fragmento {idx + 1}{" "}
+                    <span className="ml-1 text-xs text-gray-500">
+                      ({(frag.score * 100).toFixed(1)}%)
+                    </span>
                   </Tabs.Trigger>
                 ))}
               </Tabs.List>
@@ -200,6 +202,9 @@ export default function App() {
                 <div className="p-4 flex flex-col space-y-2 border-b border-gray-200 overflow-y-auto">
                   <p className="text-sm font-semibold text-gray-700">
                     📄 {selected?.nombre_original}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Relevancia: {(selected?.score * 100).toFixed(1)}%
                   </p>
                   <p className="text-sm text-gray-600 whitespace-pre-wrap">
                     {selected?.texto}
