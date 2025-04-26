@@ -17,7 +17,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 export default function App() {
-  const [history, setHistory] = useState([]);
+  // Mensaje de bienvenida
+  const initialGreeting =
+    "👋 ¡Hola! Soy ArbitrIA. 🤖 Estoy listo para ayudarte con cualquier consulta técnica acerca del reglamento del fútbol ⚽️!";
+  const [history, setHistory] = useState([
+    { role: "assistant", content: initialGreeting },
+  ]);
   const [fragments, setFragments] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,7 +67,7 @@ export default function App() {
     })();
   }, [selected]);
 
-  // Enviar consulta al backend
+  // Enviar consulta
   const sendMessage = async () => {
     if (!query.trim()) return;
     const newHist = [...history, { role: "user", content: query }];
@@ -83,7 +88,7 @@ export default function App() {
       console.error(e);
       setHistory((h) => [
         ...h,
-        { role: "assistant", content: "⚠️ Ha ocurrido un error. Intenta de nuevo." },
+        { role: "assistant", content: "⚠️ Ha ocurrido un error. Inténtalo de nuevo." },
       ]);
     } finally {
       setLoading(false);
@@ -104,10 +109,11 @@ export default function App() {
     >
       {/* Header */}
       <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
-        <div className="max-w-4xl mx-auto py-4 px-4">
-          <h1 className="text-center text-2xl font-semibold text-gray-800">
-            ⚖️ ArbitrIA, tu IA de fútbol
+        <div className="max-w-4xl mx-auto py-4 px-4 flex items-center justify-between">
+          <h1 className="text-center text-2xl font-semibold text-gray-800 flex-1">
+            ⚖️ Asist​ente de Reglamento Arbitral
           </h1>
+          {/* Si tienes un toggle o botón, colócalo aquí */}
         </div>
       </header>
 
@@ -118,7 +124,7 @@ export default function App() {
             {history.map((m, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 <div className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -127,8 +133,11 @@ export default function App() {
                       m.role === "user"
                         ? "bg-indigo-600 text-white"
                         : "bg-gray-100 text-gray-800"
-                    }`}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}> {m.content} </ReactMarkdown>
+                    }`}
+                  >
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {m.content}
+                    </ReactMarkdown>
                   </div>
                 </div>
               </motion.div>
@@ -136,7 +145,8 @@ export default function App() {
 
             {loading && (
               <div className="flex items-center justify-center text-gray-500">
-                <Loader2 className="animate-spin w-5 h-5 mr-2" />Procesando…
+                <Loader2 className="animate-spin w-5 h-5 mr-2" />
+                Procesando…
               </div>
             )}
 
@@ -204,7 +214,7 @@ export default function App() {
 
                 <div className="flex-1 p-4 flex items-center justify-center overflow-auto">
                   {selected?.pdf_url ? (
-                    <div className="w-full overflow-auto shadow rounded-lg">
+                    <div className="w-full overflow-auto rounded-lg">
                       <Document file={selected.pdf_url}>
                         <Page pageNumber={pageNumber} width={600} />
                       </Document>
