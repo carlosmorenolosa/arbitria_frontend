@@ -10,7 +10,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import * as Tabs from "@radix-ui/react-tabs";
 
-// Worker de PDF.js
+// Configuración del worker de PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 // URL del backend (añádela a frontend/.env → VITE_API_BASE=...)
@@ -62,7 +62,7 @@ export default function App() {
     })();
   }, [selected]);
 
-  // Enviar consulta
+  // Enviar consulta al backend
   const sendMessage = async () => {
     if (!query.trim()) return;
     const newHist = [...history, { role: "user", content: query }];
@@ -106,7 +106,7 @@ export default function App() {
       <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
         <div className="max-w-4xl mx-auto py-4 px-4">
           <h1 className="text-center text-2xl font-semibold text-gray-800">
-            ⚖️ Asistente de Reglamento Arbitral
+            ⚖️ ArbitrIA, tu IA de fútbol
           </h1>
         </div>
       </header>
@@ -114,31 +114,29 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
         {/* Chat Area */}
         <section className="w-full lg:w-2/3 flex flex-col">
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {history.map((m, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <div
-                  className={`max-w-lg px-4 py-3 rounded-2xl shadow-sm ${
-                    m.role === "user"
-                      ? "bg-indigo-600 text-white self-end"
-                      : "bg-white text-gray-800 self-start"
-                  }`}
-                >
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {m.content}
-                  </ReactMarkdown>
+                <div className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div
+                    className={`px-4 py-2 rounded-lg max-w-[70%] whitespace-pre-wrap ${
+                      m.role === "user"
+                        ? "bg-indigo-600 text-white"
+                        : "bg-gray-100 text-gray-800"
+                    }`}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}> {m.content} </ReactMarkdown>
+                  </div>
                 </div>
               </motion.div>
             ))}
 
             {loading && (
               <div className="flex items-center justify-center text-gray-500">
-                <Loader2 className="animate-spin w-5 h-5 mr-2" />
-                Procesando…
+                <Loader2 className="animate-spin w-5 h-5 mr-2" />Procesando…
               </div>
             )}
 
