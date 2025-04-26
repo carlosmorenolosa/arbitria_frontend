@@ -206,7 +206,7 @@ export default function App() {
         </section>
 
         {/* Fragments & PDF */}
-        <aside className="hidden lg:flex lg:flex-col w-1/3 border-l border-gray-200 bg-white">
+        <aside className="flex flex-col w-full lg:w-1/3 border-t lg:border-l border-gray-200 bg-white">
           {fragments.length > 0 ? (
             <Tabs.Root defaultValue="0" className="flex flex-col h-full">
               <Tabs.List className="flex space-x-2 overflow-x-auto p-4">
