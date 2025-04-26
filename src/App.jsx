@@ -1,4 +1,4 @@
-// App.jsx – React front-end para “Asistente de Reglamento Arbitral"
+// App.jsx – React front-end para “Asistente de Reglamento Arbitral”
 import React, { useState, useEffect, useRef } from "react";
 import { Loader2, FileText, ExternalLink, CornerDownLeft } from "lucide-react";
 import { motion } from "framer-motion";
@@ -10,7 +10,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import * as Tabs from "@radix-ui/react-tabs";
 
-// Configuración del worker de PDF.js
+// Worker de PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 // URL del backend (añádela a frontend/.env → VITE_API_BASE=...)
@@ -98,7 +98,10 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+      className="h-screen flex flex-col bg-gray-50"
+    >
       {/* Header */}
       <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
         <div className="max-w-4xl mx-auto py-4 px-4">
@@ -125,15 +128,20 @@ export default function App() {
                       : "bg-white text-gray-800 self-start"
                   }`}
                 >
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}> {m.content} </ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {m.content}
+                  </ReactMarkdown>
                 </div>
               </motion.div>
             ))}
+
             {loading && (
               <div className="flex items-center justify-center text-gray-500">
-                <Loader2 className="animate-spin w-5 h-5 mr-2" />Procesando…
+                <Loader2 className="animate-spin w-5 h-5 mr-2" />
+                Procesando…
               </div>
             )}
+
             <div ref={chatEndRef} />
           </div>
 
@@ -171,7 +179,7 @@ export default function App() {
                 {fragments.map((_, idx) => (
                   <Tabs.Trigger
                     key={idx}
-                    value={`${idx}`} 
+                    value={`${idx}`}
                     onClick={() => setSelected(fragments[idx])}
                     className="px-3 py-1 text-sm font-medium rounded-full hover:bg-gray-100 data-[state=active]:bg-indigo-100 data-[state=active]:text-indigo-600"
                   >
